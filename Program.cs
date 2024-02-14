@@ -13,9 +13,14 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<MvcMovieContext>();
+    context.Database.EnsureCreated();
 
     SeedData.Initialize(services);
 }
